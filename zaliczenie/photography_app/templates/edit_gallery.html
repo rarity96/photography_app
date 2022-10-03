@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    {% if user.id == gallery.profile.user.id%}
+        <h1>Now you can edit your gallery</h1>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Edit">
+            </form>
+    {% else %}
+        <p>You are not authenticated user for this</p>
+    {% endif %}
+{% else %}
+    <p>You are not authenticated user for this</p>
+{% endif %}
+{% endblock %}

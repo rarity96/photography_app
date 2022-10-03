@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{id_error}}
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <input name="user" value="{{ user.id }}" type="hidden"><br/>
+            <label>Description</label>
+            <textarea name="description"></textarea><br/>
+<input type="submit" value="create profile">
+
+    </form>
+
+{% endblock %}

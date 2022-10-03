@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <p>Nice profile!</p>
+     <br/>
+    {{ profile.user.username}} <br/>
+    {{ profile.description }} <br/>
+{% if profile.image %}
+    <img src="{{ profile.image.url }}" alt="Profile picture" width="125"><br/>
+{%else%}
+  <img src=" {% static 'images/profile_pic.png' %}" alt="Profile pic" width="50">
+{% endif %}
+<ul>
+    <li><a href="{% url 'events' profile.id %}">Events</a></li>
+    {% if user.is_authenticated %}
+        {% if user.id == profile.user.id%}
+            {% if contact.profile %}
+            <li><a href="/edit_contact/{{profile.id}}">Edit contact</a></li>
+            {% else %}
+            <li><a href="/create_contact/{{profile.id}}">Create Contact</a></li>
+            {% endif %}
+            <li><a href="{% url 'create-gallery' user.profile.id %}">Create gallery</a></li>
+            <li><a href="/edit_profile/{{profile.id}}/">Edit Profile</a></li>
+            <li><a href="/add_availability/{{profile.id}}">Add Availability</a></li>
+            <li><a href="{% url 'message_box' user.profile.pk %}">Message box</a></li>
+    {% endif %}
+    {% else %}
+        <li><a href="/create_message/">Send Message</a></li>
+    {% endif %}</ul>
+<ol>
+    {% for gallery in galleries  %}
+        <li><a href="{% url 'gallery' gallery.pk %}">{{ gallery }}</a>- {{ gallery.teaser}}</li>
+    {% endfor %}
+</ol>
+
+
+City: {{ contact.city }}<br/>
+Country: {{ contact.country }}<br/>
+Phone: {{ contact.phone }}<br/>
+Email: {{ contact.email }}<br/>
+{% if contact.instagram %}
+Instagram: {{ contact.instagram }}<br/>
+{% else %}
+<!--Empty space-->
+{% endif %}
+{% if contact.facebook %}
+Facebook: {{ contact.facebook }}<br/>
+{% else %}
+<!--Empty space-->
+{%endif%}
+{% if contact.website or None %}
+    Website: {{ contact.website }}<br/>
+{% else %}
+<!--Empty space-->
+{% endif %}
+{% endblock %}

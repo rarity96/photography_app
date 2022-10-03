@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>Home page</p> {{ user.username }}<br/>
+<ul>
+    <li><a href="gallery_list/">Gallery list</a></li>
+    {% if user.is_authenticated %}
+
+        {% if user.profile.id %}
+            <li><a href="{% url 'profile' user.profile.id %}">Profile</a> </li>
+            <li><a href="{% url 'edit-profile' user.profile.id %}">Edit profile</a></li>
+            <li><a href="{% url 'create-gallery' user.profile.id %}">Create gallery</a></li>
+        {% else %}
+            <li><a href="{% url 'create-profile' user.id %}">Create profile</a></li>
+        {% endif %}
+
+
+</ul>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h1>events {{ profile.user.username }}</h1> <br/>
+    <form action="" method="post">
+        {% csrf_token %}
+            {% for event in event_list %}
+                {% if event.booked == False%}
+                    <li>{{ event.date }} | {{ event.start }} | {{ event.end }}</li>
+                    {% if event.booked %}
+                        <input type="checkbox" checked="checked" value={{event.id}} name="boxes">
+                    {% else %}
+                        <input type="checkbox" value={{event.id}} name="boxes">
+                    {% endif %}
+                {% endif%}
+            {% endfor %}
+
+<br/>
+
+            <textarea type="text" name="short_message">{{ short_message }}</textarea><br/>
+        <input type="submit" value="Reserve">
+    </form>
+_________________________________
+{% if user.is_authenticated %}
+    {% if user.id == profile.user.id %}
+
+    <form action="" method="post">
+    {% csrf_token %}
+    <h2>Events to approve:</h2>
+        {% for event in event_list %}
+            {% if event.booked %}
+                {% if event.reserved == False%}
+            <li>{{ event.date }} | {{ event.start }} | {{ event.end }} | {{event.short_message}}</li>
+                Do you accept?: <input type="checkbox" value={{event.id}} name="accepted_box">
+<!--                If not: <input type="checkbox" checked="checked" value={{event.id}} name="boxes">-->
+                {% endif %}
+            {% endif %}
+        {% endfor %}<br/>
+        <input type="submit" value="Accept">
+    </form>
+
+_________________________________
+    <h2>Approved:</h2>
+        {% for event in event_list %}
+            {% if event.reserved and event.booked %}
+                <li>{{ event.date }} | {{ event.start }} | {{ event.end }} | {{event.short_message}}</li>
+            {% endif %}
+        {% endfor %}
+    {%endif%}
+{%endif%}
+{% endblock %}

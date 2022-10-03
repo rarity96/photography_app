@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated%}
+{{error}}{{id_error}}
+    <h1>You can now create your gallery</h1>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input name="user" value="{{ profile.id }}" type="hidden">
+            <label>Title:</label>
+            <input type="text" name="title"><br/>
+            <label>Content:</label>
+            <textarea name="content"></textarea><br/>
+            <label>Teaser:</label>
+            <input type="text" name="teaser"><br/>
+            <input type="submit" value="create gallery">
+        </form>
+{% else %}
+    <p>You have no rights to be here!</p>
+{% endif %}
+{% endblock %}

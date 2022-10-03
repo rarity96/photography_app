@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{error}}{{id_error}}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input name="profile_id" value="{{ user.id }}" type="hidden"><br/>
+        <label>date</label>
+        <input type="date" name="date">
+        <label>start</label>
+        <input type="time" name="start">
+        <label>end</label>
+        <input type="time" name="end">
+        <input type="submit" value="create time">
+    </form>
+{% endblock %}

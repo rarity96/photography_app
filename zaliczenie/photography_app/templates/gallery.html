@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <h1>{{ gallery.title }}</h1>
+  <h5>{{ gallery.teaser }}</h5>
+  <p> {{ gallery.content|safe }} </p><br/>
+
+<a href="{% url 'profile' gallery.profile.id %}">Profile</a>
+  {% if user.is_authenticated%}
+    {% if user.id == gallery.profile.user.id%}
+      <a href="/add_photo/">Add photo</a>
+      <a href="/edit_gallery/{{ gallery.id }}/">Edit</a>
+      <a href="/delete/{{gallery.id}}">Delete</a>
+
+    {%endif%}
+  {%endif%}
+<br/><br/>
+{% if gallery.profile.image %}
+  <img src=" {{ gallery.profile.image.url }}" alt="Profile pic" width="50"> {{ gallery.profile.name }}
+{%else%}
+  <img src=" {% static 'images/profile_pic.png' %}" alt="Profile pic" width="50">
+{% endif %}
+<br/><br/>
+
+{% for photo in photos %}
+  <img src="{{ photo.photo.url }}" width="250">
+{% endfor %}
+
+
+{% endblock %}

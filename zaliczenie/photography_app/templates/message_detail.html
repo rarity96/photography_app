@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{{ user.username }}
+{% if user.is_authenticated %}
+    {% if user.id == message.profile.user.id %}
+          <h1>{{ message.title }}</h1>
+          <p> {{ message.content }} </p><br/>
+          <p> {{ message.email }} </p><br/>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

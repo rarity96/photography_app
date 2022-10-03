@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{error}}
+<table>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input name="profile_id" value="{{ profile.id }}" type="hidden"><br/>
+        <label>city*</label>
+        <input type="text" name="city" value="{{ profile.contact.city }}">
+        <label>country*</label>
+        <input type="text" name="country" value="{{ profile.contact.country }}">
+        <label>phone*</label>
+        <input type="tel" name="phone" value="{{ profile.contact.phone }}">
+        <label>email*</label>
+        <input type="email" name="email" value="{{ profile.contact.email }}">
+        <label>instagram</label>
+        <input type="text" name="instagram"  value="{{ profile.contact.instagram }}">
+        <label>facebook</label>
+        <input type="text" name="facebook"  value="{{ profile.contact.facebook }}">
+        <label>website</label>
+        <input type="text" name="website"  value="{{ profile.contact.website }}">
+</table>
+<input type="submit" value="edit">
+{% endblock %}

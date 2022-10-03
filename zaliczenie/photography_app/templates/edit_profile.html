@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+        <h1>Now you can edit profile</h1>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Edit">
+            </form>
+{% else %}
+    <p>You are not authenticated user for this</p>
+{% endif %}
+{% endblock %}

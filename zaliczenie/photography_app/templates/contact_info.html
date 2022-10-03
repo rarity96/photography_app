@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{error}}
+    <p>Here you can fill all ways to contact with u!</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input name="profile_id" value="{{ profile.id }}" type="hidden"><br/>
+        <label>city*</label>
+        <input type="text" name="city">
+        <label>country*</label>
+        <input type="text" name="country">
+        <label>phone*</label>
+        <input type="tel" name="phone">
+        <label>email*</label>
+        <input type="email" name="email">
+        <label>instagram</label>
+        <input type="text" name="instagram">
+        <label>facebook</label>
+        <input type="text" name="facebook">
+        <label>website</label>
+        <input type="text" name="website">
+        <input type="submit" value="create contact">
+    </form>
+{% endblock %}
