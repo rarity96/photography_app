@@ -224,7 +224,7 @@ class GalleryListView(ListView):
 
 
 class DeleteGalleryView(DeleteView):
-    model = [Gallery, Profile]
+    model = Gallery
     template_name = 'gallery_confirm_delete.html'
     success_url = reverse_lazy('gallery-list')
 
