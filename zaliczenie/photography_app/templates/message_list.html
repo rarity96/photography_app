@@ -3,14 +3,16 @@
 {% block content %}
 {% if user.is_authenticated %}
     {% if user.id == profile.user.id %}
-  <h1>Your messages</h1>
-{{ profile.user.username}} <br/>
+  <h1>Your messages {{ profile.user.username}} </h1>
+<br/>
 
 <ol>
         {% for message in messages %}
         <li><a href= "{% url 'message' message.pk %}">{{ message }}</a></li>
         {% endfor %}
 </ol>
+    {%else%}
+    <p>Nope</p>
     {% endif %}
 {%else%}
 <p>Nope</p>

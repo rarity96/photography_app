@@ -1,20 +1,9 @@
 from django.db import models
-# from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from phone_field import PhoneField
 from ckeditor.fields import RichTextField
-from django.utils import timezone
+
 # Create your models here.
-
-# User = get_user_model()
-
-STATUS = {
-    (1, 'Await'),
-    (2, 'Accepted'),
-    (3, 'Rejected'),
-}
-
-NOW = timezone
 
 
 class User(AbstractUser):

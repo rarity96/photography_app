@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
-from .models import Gallery, Contact, Photos
+from .models import Gallery, Contact, Photos, Message
 
 User = get_user_model()
 
@@ -28,3 +28,13 @@ class AddPhotoForm(forms.ModelForm):
     class Meta:
         model = Photos
         fields = '__all__'
+
+
+# class MessageForm(forms.ModelForm):
+#     class Meta:
+#         model = Message
+#         fields = ('profile', 'title', 'name', 'content', 'email')
+#         widgets = {
+#             'profile': forms.NumberInput(attrs={'type': 'hidden', 'value': '{{ profile.id }}'})
+#         }
+

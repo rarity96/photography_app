@@ -22,10 +22,10 @@
             <li><a href="{% url 'create-gallery' user.profile.id %}">Create gallery</a></li>
             <li><a href="/edit_profile/{{profile.id}}/">Edit Profile</a></li>
             <li><a href="/add_availability/{{profile.id}}">Add Availability</a></li>
-            <li><a href="{% url 'message_box' user.profile.pk %}">Message box</a></li>
+            <li><a href="/message_box/{{profile.id}}">Message box</a></li>
     {% endif %}
-    {% else %}
-        <li><a href="/create_message/">Send Message</a></li>
+        {% else %}
+    <li><a href="/create_message/">Send Message</a></li>
     {% endif %}</ul>
 <ol>
     {% for gallery in galleries  %}

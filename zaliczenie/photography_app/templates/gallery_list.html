@@ -5,7 +5,7 @@
 <ul>
     {% for gallery in object_list %}
     <li><a href="{% url 'gallery' gallery.pk %}"> {{ gallery.title }}</a><br/>
-      {{ gallery.content|safe }}<br/>
+      {{ gallery.teaser }}<br/>
       {{ gallery.profile.user }}
       </li>
 </ul>

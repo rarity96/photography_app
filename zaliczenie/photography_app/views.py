@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView, FormView
+from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .forms import UserRegistrationForm, AddPhotoForm
 from .models import (User,
@@ -41,10 +42,11 @@ class CreateProfileView(View):
     def post(self, request, pk):
         user_id = request.POST.get('user')
         description = request.POST.get('description')
+        img = request.FILES['img']
         profile = User.objects.get(id=pk)
         id_error = "Don't mess with my code ;)"
         if int(user_id) == profile.id:
-            Profile.objects.create(user_id=user_id, description=description)
+            Profile.objects.create(user_id=user_id, description=description, image=img)
             return redirect('/')
         else:
             ctx = {'id_error': id_error}
@@ -98,6 +100,13 @@ class AddContactView(View):
         facebook = request.POST.get('facebook')
         website = request.POST.get('website')
         error = "Don't mess with my code ;)"
+        int(phone)
+        if isinstance(phone, int):
+            if len(phone) != 9:
+                error = 'wrong number'
+                ctx = {'profile': profile,
+                       'error': error}
+                return render(request, 'contact_info.html', ctx)
         if not profile_id or not city or not country or not phone or not email:
             error = "Fill all * inputs"
             ctx = {'profile': profile,
@@ -163,7 +172,7 @@ class EditContactView(View):
             return render(request, 'edit_contact.html', ctx)
 
 
-class CreateGalleryView(View):
+class CreateGalleryView(LoginRequiredMixin, View):
     template_name = 'create_gallery.html'
 
     def get(self, request, pk):
@@ -223,14 +232,15 @@ class GalleryListView(ListView):
     ordering = ['id']
 
 
-class DeleteGalleryView(DeleteView):
-    model = Gallery
+class DeleteGalleryView(LoginRequiredMixin, DeleteView):
+    model = [Gallery, Profile]
     template_name = 'gallery_confirm_delete.html'
     success_url = reverse_lazy('gallery-list')
 
 
 class CreateMessage(CreateView):
     model = Message
+    # form_class = MessageForm
     template_name = 'create_message.html'
     fields = '__all__'
 
@@ -240,7 +250,6 @@ class CreateMessage(CreateView):
 
 class AddPhoto(CreateView):
     model = Photos
-    # fields = '__all__'
     template_name = 'add_photos.html'
     form_class = AddPhotoForm
 
@@ -320,3 +329,10 @@ class EventsList(View):
             Availability.objects.filter(pk=int(y)).update(reserved=True)
 
         return redirect('/events/{}'.format(profile.id))
+
+
+class GalleryViewDelete(DeleteView):
+    model = Gallery
+    queryset = Gallery.objects.all()
+    template_name = 'gallery_confirm_delete.html'
+    success_url = reverse_lazy('gallery-list')
