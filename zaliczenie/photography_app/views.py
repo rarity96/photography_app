@@ -232,12 +232,6 @@ class GalleryListView(ListView):
     ordering = ['id']
 
 
-class DeleteGalleryView(LoginRequiredMixin, DeleteView):
-    model = [Gallery, Profile]
-    template_name = 'gallery_confirm_delete.html'
-    success_url = reverse_lazy('gallery-list')
-
-
 class CreateMessage(CreateView):
     model = Message
     # form_class = MessageForm
